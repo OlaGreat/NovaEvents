@@ -91,7 +91,7 @@ If you're a contributor looking for where to start, check the **Issues** tab —
 
 ### Prerequisites
 
-- [Rust](https://www.rust-lang.org/tools/install) with the `wasm32-unknown-unknown` target
+- [Rust](https://www.rust-lang.org/tools/install) with the `wasm32v1-none` target (`rustup target add wasm32v1-none`)
 - [Stellar CLI](https://developers.stellar.org/docs/build/smart-contracts/getting-started/setup)
 - A funded Stellar testnet account
 
@@ -115,7 +115,9 @@ stellar contract deploy \
   --network testnet
 ```
 
-The deployed contract ID will be published here once available.
+**Testnet contract ID:** `CABTSQOXHOOAFFWBPDIXAPAL7KKV76WFL3WLGBUH6SLJ7R2BO5YNWKFU`
+
+**Testnet USDC token:** `CAUJTFVKA5WCN4ZPUDBRDAS3DT5HVKNQTLFT32KDAFVGJRTB7VPRVNRT`
 
 ## Contributing
 
