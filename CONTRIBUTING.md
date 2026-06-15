@@ -25,6 +25,18 @@ If you want to work on something that isn't in the issues, open an issue first a
   ```
 - [Stellar CLI](https://developers.stellar.org/docs/build/smart-contracts/getting-started/setup) for deploying to testnet
 
+### Format
+
+```bash
+cargo fmt
+```
+
+### Lint
+
+```bash
+cargo clippy -- -D warnings
+```
+
 ### Build
 
 ```bash
@@ -37,7 +49,7 @@ cargo build
 cargo test
 ```
 
-All tests must pass before you open a PR.
+All 18 tests must pass before you open a PR. New functions require new tests.
 
 ### Build the WASM artifact
 
