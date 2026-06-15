@@ -87,19 +87,25 @@ If you're a contributor looking for where to start, check the **Issues** tab —
 
 ## Getting started
 
-> Setup steps and exact commands will be finalized alongside the core contract. The flow below describes the intended developer experience.
-
 ### Prerequisites
 
-- [Rust](https://www.rust-lang.org/tools/install) with the `wasm32v1-none` target (`rustup target add wasm32v1-none`)
-- [Stellar CLI](https://developers.stellar.org/docs/build/smart-contracts/getting-started/setup)
-- A funded Stellar testnet account
+- [Rust](https://www.rust-lang.org/tools/install) with the `wasm32v1-none` target
+- [Stellar CLI](https://developers.stellar.org/docs/build/smart-contracts/getting-started/setup) v26+
+- A funded Stellar testnet account (`stellar keys generate --network testnet <name>`)
+
+### Install the WASM target
+
+```bash
+rustup target add wasm32v1-none
+```
 
 ### Build
 
 ```bash
-stellar contract build
+cargo build --target wasm32v1-none --release
 ```
+
+The compiled WASM lands at `target/wasm32v1-none/release/nova_events.wasm`.
 
 ### Test
 
@@ -111,8 +117,9 @@ cargo test
 
 ```bash
 stellar contract deploy \
-  --wasm target/wasm32-unknown-unknown/release/event_ticketing.wasm \
-  --network testnet
+  --wasm target/wasm32v1-none/release/nova_events.wasm \
+  --network testnet \
+  --source <your-key-name>
 ```
 
 **Testnet contract ID:** `CABTSQOXHOOAFFWBPDIXAPAL7KKV76WFL3WLGBUH6SLJ7R2BO5YNWKFU`
