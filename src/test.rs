@@ -321,6 +321,46 @@ fn test_invalid_tier_index_rejected() {
 }
 
 #[test]
+fn test_create_event_with_no_tiers_rejected() {
+    let env = Env::default();
+    env.mock_all_auths();
+    let (_, _, _, client) = setup(&env);
+    let organizer = Address::generate(&env);
+
+    let result = client.try_create_event(
+        &organizer,
+        &String::from_str(&env, "Empty"),
+        &String::from_str(&env, "desc"),
+        &String::from_str(&env, "venue"),
+        &1_750_000_000_u64,
+        &100_000_000_i128,
+        &Vec::new(&env),
+    );
+
+    assert!(result.is_err());
+}
+
+#[test]
+fn test_create_event_with_negative_funding_goal_rejected() {
+    let env = Env::default();
+    env.mock_all_auths();
+    let (_, _, _, client) = setup(&env);
+    let organizer = Address::generate(&env);
+
+    let result = client.try_create_event(
+        &organizer,
+        &String::from_str(&env, "Bad Goal"),
+        &String::from_str(&env, "desc"),
+        &String::from_str(&env, "venue"),
+        &1_750_000_000_u64,
+        &-1_i128,
+        &default_tiers(&env),
+    );
+
+    assert!(result.is_err());
+}
+
+#[test]
 fn test_zero_price_tier_rejected() {
     let env = Env::default();
     env.mock_all_auths();
