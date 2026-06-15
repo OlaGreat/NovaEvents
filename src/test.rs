@@ -269,3 +269,63 @@ fn test_double_redeem_fails() {
     let result = client.try_redeem_ticket(&organizer, &event_id, &ticket_id);
     assert!(result.is_err());
 }
+
+#[test]
+fn test_zero_price_tier_rejected() {
+    let env = Env::default();
+    env.mock_all_auths();
+
+    let (_, _, _, client) = setup(&env);
+    let organizer = Address::generate(&env);
+
+    let bad_tiers = vec![
+        &env,
+        TierInput {
+            name: String::from_str(&env, "Free"),
+            price: 0,
+            supply_cap: 50,
+        },
+    ];
+
+    let result = client.try_create_event(
+        &organizer,
+        &String::from_str(&env, "Bad Event"),
+        &String::from_str(&env, "desc"),
+        &String::from_str(&env, "venue"),
+        &1_750_000_000_u64,
+        &100_000_000_i128,
+        &bad_tiers,
+    );
+
+    assert!(result.is_err());
+}
+
+#[test]
+fn test_zero_supply_cap_tier_rejected() {
+    let env = Env::default();
+    env.mock_all_auths();
+
+    let (_, _, _, client) = setup(&env);
+    let organizer = Address::generate(&env);
+
+    let bad_tiers = vec![
+        &env,
+        TierInput {
+            name: String::from_str(&env, "Ghost"),
+            price: 10_000_000_i128,
+            supply_cap: 0,
+        },
+    ];
+
+    let result = client.try_create_event(
+        &organizer,
+        &String::from_str(&env, "Bad Event"),
+        &String::from_str(&env, "desc"),
+        &String::from_str(&env, "venue"),
+        &1_750_000_000_u64,
+        &100_000_000_i128,
+        &bad_tiers,
+    );
+
+    assert!(result.is_err());
+}

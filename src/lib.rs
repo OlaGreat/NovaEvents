@@ -119,6 +119,15 @@ impl NovaEventsContract {
         if funding_goal <= 0 {
             panic!("funding goal must be positive");
         }
+        for i in 0..tiers.len() {
+            let t: TierInput = tiers.get(i).unwrap();
+            if t.price <= 0 {
+                panic!("tier price must be positive");
+            }
+            if t.supply_cap == 0 {
+                panic!("tier supply cap must be at least 1");
+            }
+        }
 
         let event_id: u32 = env
             .storage()
