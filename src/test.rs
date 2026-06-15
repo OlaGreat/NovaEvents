@@ -271,6 +271,18 @@ fn test_double_redeem_fails() {
 }
 
 #[test]
+fn test_double_initialize_rejected() {
+    let env = Env::default();
+    env.mock_all_auths();
+
+    let (token_addr, _, _, client) = setup(&env);
+
+    // setup() already called initialize once; a second call must fail
+    let result = client.try_initialize(&token_addr);
+    assert!(result.is_err());
+}
+
+#[test]
 fn test_sponsor_nonexistent_event_fails() {
     let env = Env::default();
     env.mock_all_auths();
